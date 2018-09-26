@@ -1,0 +1,64 @@
+<div id="detalheAvaliacao" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel">Detalhes</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid" id="icExibeIni">
+			<div class="span4 text-right margin0">
+				<label>Usu&aacute;rio de Solicita&ccedil;&atilde;o:</label>
+			</div>
+			<div class="span8 margin0">
+				<span><%= model.get('usuario') %></span>
+			</div>
+		</div>
+
+		<h5 class="margin0">Migra&ccedil;&atilde;o de Avalia&ccedil;&atilde;o</h5>
+		<table class="tabelaDetAvaliacao">
+			<tr>
+				<td class="labelDetAvaliacao"><label>Sistema:</label></td>
+				<td class="spanDetAvaliacao"><span><%=model.get('sistema') %></span></td>
+			</tr>
+			<tr>
+				<td class="labelDetAvaliacao"><label>Data:</label></td>
+				<td class="spanDetAvaliacao"><span><%=model.get('dataMigracao') %></span></td>
+			</tr>
+			<tr>
+				<td class="labelDetAvaliacao"">Erro:</td>
+				<td class="spanDetAvaliacao"><span><%=model.get('erroMigracao') %></span></td>
+			</tr>
+		</table>
+
+		<h5 class="margin0">Desbloqueio</h5>
+		<table class="tabelaDetAvaliacao">
+			<tr>
+				<td class="labelDetAvaliacao"><label>Usuario:</label></td>
+				<td class="spanDetAvaliacao"><span><%= model.get('usuarioDesbloqueio') %></span></td>
+			</tr>
+			<tr>
+				<td class="labelDetAvaliacao"><label>Data:</label></td>
+				<td class="spanDetAvaliacao"><span><%= model.get('dataDesbloqueio') %></span></td>
+			</tr>
+		</table>
+
+		<h5 class="margin0">Cancelamento</h5>
+		<table class="tabelaDetAvaliacao">
+			<tr>
+				<td class="labelDetAvaliacao"><label>Usuario:</label></td>
+				<td class="spanDetAvaliacao"><span><%= model.get('usuarioCancel') %></span></td>
+			</tr>
+			<tr>
+				<td class="labelDetAvaliacao"><label>Data:</label></td>
+				<td class="spanDetAvaliacao"><span><%= model.get('dataCancelamento') %></span></td>
+			</tr>
+		</table>
+
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
+		<% console.log(pessoa);
+		 if(pessoa.get('procBatch') == null | pessoa.get('procBatch') == 0){ %>
+		<button class="btn" id="btnReenviaAval" data-avaliacao="<%= model.get('codigo') %>">Reenviar Avalia&ccedil;&atilde;o</button>
+		<% } %>	
+	</div>
+</div>

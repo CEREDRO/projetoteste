@@ -1,0 +1,81 @@
+<%
+function toCurrency(value){
+	if (value != null && value != ""){
+		var t = "R$ ";
+		t += value; 
+		if (t.indexOf(".") === -1){
+			t += ".00";
+		}
+		value = t;
+	}else{
+		value = ''; 
+	}
+	return value;
+}
+%>
+<div id="detRendForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel">Detalhe Renda Informal</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-inline dadosGerais">
+			<div class="span12">
+				<p>
+					<label>Nome:</label>
+					<span class="form-label-static"><%= model.get('nomeAtividade') %></span>
+				</p>
+				<p>
+					<label>Renda Liquida Mensal:</label>
+					<span class="form-label-static"><%= toCurrency(model.get('rendaLiquida')) %></span>
+				</p>
+				<p>
+					<label>Documentos Complementares</label>
+				</p>
+				<p>
+					<% if(model.get('despesa') == 1){ %>
+						<i class="icon-ok"></i>
+					<% }else{ %>
+						<i class="icon-remove"></i>
+					<% } %>
+					<span class="form-label-static">Contas &Aacute;gua, Energia ou Telefone</span>
+				</p>
+				<p>
+					<% if(model.get('previdencia') == 1){ %>
+						<i class="icon-ok"></i>
+					<% }else{ %>
+						<i class="icon-remove"></i>
+					<% } %>
+					<span class="form-label-static">Previdencia, Cons&oacute;rcio, Seguro ou Plano Sa&uacute;de</span>
+				</p>
+				<p>
+					<% if(model.get('fatura') == 1){ %>
+						<i class="icon-ok"></i>
+					<% }else{ %>
+						<i class="icon-remove"></i>
+					<% } %>
+					<span class="form-label-static">Fatura Cart&atilde;o / Extrato Conta Corrente</span>
+				</p>
+				<p>
+					<% if(model.get('internet') == 1){ %>
+						<i class="icon-ok"></i>
+					<% }else{ %>
+						<i class="icon-remove"></i>
+					<% } %>
+					<span class="form-label-static">Internet/TV a Cabo/Assinatura Revista/Jornais</span>
+				</p>
+				<p>
+					<% if(model.get('semComprovante') == 1){ %>
+						<i class="icon-ok"></i>
+					<% }else{ %>
+						<i class="icon-remove"></i>
+					<% } %>
+					<span class="form-label-static">N&atilde;o Apresentou Documentos</span>
+				</p>
+			</div>
+		</div>	
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>

@@ -1,0 +1,58 @@
+<div class="row-fluid container-margin-bottom hide" id="exibeHintProcesso">
+	<div id="showhintPesquisa" class="span3">
+		<div class="bs-callout" id="hintPesquisa">
+			<div class="row-fluid">
+				<% if(pessoa.get('tipo').codigo != 23){ %>
+		    	<i class="icon-globe pointer" data-codigo="" id="exibePesqExterna"></i> Pesquisa
+		    	<div class="pull-right pointer">
+					<i class="icon-list-alt" id="solRelPesquisa" title="Exibir Relatorio Pesquisa Externa" data-acao="C"></i>
+				</div>
+				<% }else{ %>
+					<i class="icon-globe"></i> Pesquisa
+				<% } %>
+			</div>
+			<div class="row-fluid hide" id="progressPesquisa3">
+				<div class="progress progress-striped active" id="progressPesquisa2">
+	  				<div class="bar" style="width: 25%;" id="progressPesquisa"></div>
+				</div>
+      		</div>
+		</div>
+	</div>
+	<div id="showhintValidacao" class="span3">
+		<div class="bs-callout" id="hintValidacao">
+			<div class="row-fluid">
+		    	<i class="icon-ok pointer" data-codigo="" id="solErroValidacao"></i> Valida&ccedil;&atilde;o
+		    </div>
+		    <div class="row-fluid hide" id="progressValidacao3">
+			    <div class="progress progress-striped active" id="progressValidacao2">
+		  			<div class="bar" style="width: 25%;" id="progressValidacao"></div>
+	      		</div>
+	      	</div>
+		</div>
+	</div>
+	<div id="showhintAvaliacao" class="span3">
+		<div class="bs-callout" id="hintAvaliacao">
+			<div class="row-fluid">
+		    	<i class="icon-flash"></i> Avalia&ccedil;&atilde;o
+		    </div>
+		    <div class="row-fluid hide" id="progressAvaliacao3">
+			    <div class="progress progress-striped active" id="progressAvaliacao2">
+		  			<div class="bar" style="width: 25%;" id="progressAvaliacao"></div>
+	      		</div>
+	      	</div>
+		</div>
+	</div>
+	<div class="span3" id="limites">
+		<div class="bs-callout" id="hintLimites">
+			<div class="row-fluid">
+		    	<i class="icon-flash"></i> Limites
+		    </div>
+		    <div class="row-fluid hide" id="progressLimites3">
+			    <div class="progress progress-striped active" id="progressLimites2">
+		  			<div class="bar" style="width: 25%;" id="progressLimites"></div>
+	      		</div>
+	      	</div>
+		</div>
+	</div>
+</div>
+<div id="exibeValidacao"></div>

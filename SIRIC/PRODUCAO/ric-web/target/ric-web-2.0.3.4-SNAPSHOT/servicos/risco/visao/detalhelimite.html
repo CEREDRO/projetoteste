@@ -1,0 +1,13 @@
+<div class="row-fluid muted">
+<% for (i = 0; i < colecao.length; i++) { %>
+	<div class="span3">
+		<span><%= colecao[i].descricao %> <%= colecao[i].prefixo %><%= colecao[i].valor %><%= colecao[i].sufixo %></span>
+		
+		<% for (j = i+1; j < colecao.length; j++) { %>
+			<%  if (colecao[j].apresentacao != 2) { break; } %>
+			<span><%= colecao[j].descricao %> <%= colecao[j].prefixo %><%= colecao[j].valor %><%= colecao[j].sufixo %></span>
+			<% i++ %>
+		<% } %>
+	</div>
+<% } %>
+</div>

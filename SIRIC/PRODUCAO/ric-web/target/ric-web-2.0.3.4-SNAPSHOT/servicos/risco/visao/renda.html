@@ -1,0 +1,49 @@
+<div>
+	<strong>Renda Formal Comprovada</strong>
+	<table class="table table-hover table-condensed">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th class="text-center">Renda Bruta</th>
+				<th class="text-center">Renda Liquida</th>
+				<th class="text-center">CPF/CNPJ</th>
+				<th class="text-center">Tipo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% collection.each(function(model){ %>
+				<% if(model.get('tipo') == "F"){ %>
+					<tr data-tipo="F" data-codigo="<%= model.get('id') %>">
+						<td><%= model.get('nome') %></td>
+						<td class="text-center"><%= model.get('valorBruto') %></td>
+						<td class="text-center"><%= model.get('valorLiquido') %></td>
+						<td class="text-center"><%= model.get('cpfcnpj') %></td>
+						<td class="text-center"><%= model.get('tipoPessoa') %></td>
+					</tr>
+				<% }}); %>
+		</tbody>
+	</table>
+	<hr class="margin0"/>
+	<br/>
+	<strong>Renda Informal</strong>
+	<table class="table table-hover table-condensed">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th class="text-center">Renda Liquida</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% collection.each(function(model){ %>
+				<% if(model.get('tipo') == "I"){ %>
+					<tr data-tipo="I" data-codigo="<%= model.get('id') %>">
+						<td><%= model.get('nome') %></td>
+						<td class="text-center"><%= model.get('valorLiquido') %></td>
+					</tr>
+				<% }}); %>
+		</tbody>
+	</table>
+	<br/>
+</div>
+<div id="exibeDetalheRenda">
+</div>

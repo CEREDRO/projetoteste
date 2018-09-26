@@ -1,0 +1,53 @@
+<div id="validacao" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 800px;left: 40%;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel">Relat&oacute;rio de Valida&ccedil;&atilde;o</h3>
+	</div>
+	<div class="modal-body">
+		<% 	var count = 0;
+			var pessoa1 = 0;
+			var pessoa2 = 0;
+			var pessoa3 = 0;
+			collection.each(function(models){
+				pessoa1 = models.get('codiogPessoa');
+				pessoa2 = models.get('pessoaValidada');
+				if(pessoa1 == pessoa3){
+					pessoa2 = pessoa1;
+				}
+				if (pessoa1 != pessoa2 || count == 0){
+					if (count != 0){ %>
+							</tbody>
+						</table>
+					<% } %>
+					<h5><%= models.get('cpfCnpj') %> : <%= models.get('nome') %></h5>
+					<table class="table table-hover table-condensed">
+						<thead>
+							<tr class="table-default-header">
+								<th width="50%">Informa&ccedil;&atilde;o</th>
+								<th width="50%">Descri&ccedil;&atilde;o</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% if (models.get('item') != null){ %>
+								<tr>
+									<td><%= models.get('item') %></td>
+									<td><%= models.get('mensagem') %></td>
+								</tr>
+							<% } %>
+				<% }else{ %>
+					<% if (models.get('item') != null){ %>
+						<tr>
+							<td><%= models.get('item') %></td>
+							<td><%= models.get('mensagem') %></td>
+						</tr>
+					<% } %>
+				<% } count   = count + 1;
+				     pessoa3 = pessoa1; %>
+			<% }); %>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>

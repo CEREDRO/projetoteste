@@ -1,0 +1,116 @@
+<div class="panel panel-default pointer">
+	<div class="panel-heading" data-toggle="collapse" data-target="#consultaAvaliacao">
+		<div class="row-fluid">
+			<div class="span6">
+				<h3 class="panel-title"><i class="icon-list-alt"></i> Consulta Avalia&ccedil;&atilde;o</h3>
+			</div>
+		</div>
+	</div>
+	<div class="collapse" id="consultaAvaliacao">
+		<div class="panel-body">
+			<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Avalia&ccedil;&otilde;es</th>
+						<th class="text-center">Data</th>
+						<th class="text-center">Validade</th>
+						<th class="text-center">N&deg; Avalia&ccedil;&atilde;o</th>
+						<th class="text-center">Produto</th>
+						<th class="text-center">Limite</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% 	function strToDate(value){
+							if (value != null){
+								return value.substring(8,10) + "/" + value.substring(5,7) + "/" + value.substring(0, 4);
+							}else{
+								return value;
+							}
+						}
+						function getDate(){
+							return new Date();
+						}
+						function validaData(value){
+							if (value != null){
+								var data = new Date(value);
+								data.setDate(data.getDate() + 1);
+								data.setHours(0);
+								if (data >= getDate()){
+									return 1;
+								}else{
+									return 0;
+								}
+							}else{
+								return 0;
+							}
+						}
+						function toCurrency(data){
+							if(data != null){
+								var value = "" + data;
+						       	var len = value.length;
+						       	var pos = value.indexOf(".");
+						       	if(pos == -1){
+						       		value = value + ".00";
+						       	}else{
+						       		pos = len - pos;
+						       		if(pos < 3){
+						       			value = value + "0";
+						       		}
+						       	}
+						       	value = value.replace('.',',');
+						       	value = value.substring(0,(value.indexOf(",") + 3));
+						       	len = value.length;
+						       	if(len > 6){
+						       		var len2 = len -6;
+						       		for(var i = len2; i >= 0; i--){
+						       			value = value.substring(0,i) + "." + value.substring(i,len);
+						       			i = i - 3;
+						       		}
+						       	}
+						       	value = "R$ " + value;
+						       
+						       	
+						       	return value;
+							}else{
+								return data;
+							}
+						}
+						collection.each(function(model){
+						if (model.get('modeloAvaliacao').restricaoVisualizacao == null) { %>
+							<tr class="text-error">
+						<% }else if (model.get('indicaBloqueado') == 1){ %>
+							<tr class="text-warning">
+						<% }else if (model.get('indicaAutomatica') == "S" && validaData(model.get('dataValidade')) == 1 && model.get('situacao') == 3 && model.get('dataCancelamento') == null){ %>
+							<tr class="text-info">
+						<% }else if (validaData(model.get('dataValidade')) == 1 && model.get('situacao') == 3 && model.get('dataCancelamento') == null){ %>
+							<tr class="text-success">
+						<% } else{ %>
+							<tr>
+						<% }%>
+							<% if(model.get('situacao') == 3){ %>
+								<td><img src="layout/img/semaforoverde.png" title="Avalia&ccedil;&atilde;o Concluida" class="detalhe-avaliacao" data-codigo="<%= model.get('codigo') %>"/></td>
+							<% } else if(model.get('situacao') == 2) { %>
+								<td><img src="layout/img/semaforoamarelo.png" title="Avalia&ccedil;&atilde;o em processamento" class="detalhe-avaliacao" data-codigo="<%= model.get('codigo') %>"/></td>
+							<% } else if(model.get('situacao') == 1) {%>
+								<td><img src="layout/img/SemaforoVermelho.png" title="Avalia&ccedil;&atilde;o Solicitada" class="detalhe-avaliacao" data-codigo="<%= model.get('codigo') %>"/></td>
+							<% } else {%>
+								<td></td>
+							<% } %>
+							<td> <%= model.get('modeloAvaliacao').denominacao %> </td>
+							<td class="text-center"><%= strToDate(model.get('data')) %></td>
+							<% if(model.get('dataValidade') != null){ %>
+								<td class="text-center"><%= strToDate(model.get('dataValidade')) %></td>
+							<% }else{ %>
+								<td class="text-center">00/00/0000</td>
+							<% } %>
+							<td class="text-center"><%= model.get('codigo') %></td>
+							<td class="text-center"><%= model.get('produto') %></td>
+							<td class="text-center"><%= toCurrency(model.get('valorLimite')) %></td>
+						</tr>
+					<% }); %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,30 @@
+<div id="cadastramentoPropriedadeRural" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="cadastramentoPropriedadeRuralLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" id="closePropriedadeRural">&times;</button>
+		<h3 id="cadastramentoPropriedadeRuralLabel">Cadastramento de Propriedade Rural</h3>
+	</div>
+	<div class="modal-body">
+	<div class="row-fluid" id="divTipoPropriedade">
+			<% if ((codigo == 0 || codigo == null) & $caixa.permissoes.hasObjeto(213)) { %>
+			<div class="span4 text-right pesquisa-label">
+				<label>Tipo de Propriedade:</label>
+			</div>
+			<div class="span4">
+				<input type="radio" name="tipoPropriedade" id="btncomMatricula" value="1" checked>
+				<span>Com Matr&iacute;cula</span>
+			</div>
+			<div class="span4">
+				<input type="radio" name="tipoPropriedade" id="btnsemMatricula" value="2">
+				<span>Sem Matr&iacute;cula</span>
+			</div>
+			<hr>
+			<% } %>
+			<div id="painelPropriedadeRural">
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" id="btnOkRural">Ok</button>
+		<button class="btn" id="btnCancelaPropriedadeRural">Cancelar</button>
+	</div>
+</div>

@@ -1,0 +1,169 @@
+<%
+	function toCPF(value){
+		if (value != null && value != ""){
+			value = value.substring(0,3) + "." + value.substring(3,6) + "." + value.substring(6,9) + "-" + value.substring(9,11);
+		}else{
+			value = ''; 
+		}
+		return value;
+	}
+	
+	function toCNPJ(value){
+		if (value != null && value != ""){
+			value = value.substring(0,2) + "." + value.substring(2,5) + "." + value.substring(5,8) + "/" + value.substring(8,12) + "-" + value.substring(12,14);
+		}else{
+			value = ''; 
+		}
+		return value;
+	}
+	
+	function toCurrency(value){
+		if (value != null && value != ""){
+			var t = "R$ ";
+			t += value; 
+			if (t.indexOf(".") === -1){
+				t += ".00";
+			}
+			value = t;
+		}else{
+			value = ''; 
+		}
+		return value;
+	}
+	
+	function toDate(value){
+		if (value != null && value != ""){
+			value = value.substring(0,2) + "/" + value.substring(2,6);
+		}else{
+			value = ''; 
+		}
+		return value;
+	}
+
+	function toNull(value){
+		if(value != null && parseInt(value) == 0){
+			value = null;
+		}
+		return value;
+	}
+%>
+<div id="detRendForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 770px;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel">Detalhe Renda Formal</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-inline dadosGerais">
+			<div class="span12">
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Fonte Pagadora:</label>
+					</div>
+					<div class="span10">
+						<% if (model.get('tipoPessoa') == 1){ %>
+							<span style="font-size: 11px;" class="form-label-static">1 - F&iacute;sica</span>
+						<% }else{ %>
+							<span style="font-size: 11px;" class="form-label-static">2 - Jur&iacute;dica</span>
+						<% } %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">CNPJ/CPF:</label>
+					</div>
+					<div class="span3">
+						<% if (model.get('tipoPessoa') == 1){ %>
+							<span style="font-size: 11px;" class="form-label-static"><%= toCPF(model.get('cgcCpf')) %></span>
+						<% }else{ %>
+							<span style="font-size: 11px;" class="form-label-static"><%= toCNPJ(model.get('cgcCpf')) %></span>
+						<% } %>
+					</div>
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Fonte Pagadora:</label>
+					</div>
+					<div class="span5">
+						<span style="font-size: 11px;" class="form-label-static"><%= model.get('razaoSocial') %></span>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Cod Ocupa&ccedil;&atilde;o IR:</label>
+					</div>
+					<div class="span3">
+						<span style="font-size: 11px;" class="form-label-static"><%= model.get('codigoOcupacao') %></span>
+					</div>
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Descri&ccedil;&atilde;o Ocupa&ccedil;&atilde;o:</label>
+					</div>
+					<div class="span5">
+						<span style="font-size: 11px;" class="form-label-static"><%= model.get('descricaoOcupacao') %></span>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Comprovante Renda:</label>
+					</div>
+					<div class="span10">
+						<span style="font-size: 11px;" class="form-label-static"><%= model.get('codigoComprovanteRenda') %> - <%= model.get('descricaoComprovanteRenda') %></span>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Bruta:</label>
+					</div>
+					<div class="span3">
+						<span style="font-size: 11px;" class="form-label-static"><%= toCurrency(model.get('rendaBruta')) %></span>
+					</div>
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Liquida:</label>
+					</div>
+					<div class="span5">
+						<span style="font-size: 11px;" class="form-label-static"><%= toCurrency(model.get('rendaLiquida')) %></span>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Data de Refer&ecirc;ncia:</label>
+					</div>
+					<div class="span10">
+						<span style="font-size: 11px;" class="form-label-static"><%= toDate(model.get('dataDocumento')) %></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<p>
+			<label style="color: #3A87AD; font-size: 15px;">
+				<strong>Tempo no Emprego Anterior</strong>
+			</label>
+		</p>
+		<div class="form-inline dadosGerais">
+			<div class="span12">
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Anos:</label>
+					</div>
+					<div class="span3">
+						<span style="font-size: 11px;" class="form-label-static"><%= toNull(model.get('tempoEmpregoAnteriorAnos')) %></span>
+					</div>
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Meses:</label>
+					</div>
+					<div class="span3">
+						<span style="font-size: 11px;" class="form-label-static"><%= toNull(model.get('tempoEmpregoanteriorMeses')) %></span>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span2 renda-label">
+						<label style="color: #3A87AD; font-size: 11px;">Ano Desligamento:</label>
+					</div>
+					<div class="span10">
+						<span style="font-size: 11px;" class="form-label-static"><%= toNull(model.get('anoDesligamento')) %></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>

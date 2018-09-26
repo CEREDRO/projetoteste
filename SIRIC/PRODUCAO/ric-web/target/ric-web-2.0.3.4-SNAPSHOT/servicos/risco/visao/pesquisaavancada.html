@@ -1,0 +1,105 @@
+<style>
+.modal-body {
+  position: relative;
+  overflow-y: auto;
+  max-height: 500px;
+  padding: 15px;
+}
+</style>
+<div id="pesquisaAvancada" class="modal_big hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel">Sele&ccedil;&atilde;o de Pessoa</h3>
+	</div>
+	<div class="modal-body">
+		<div id="errorsContainer" class="row-fluid"></div>
+		<% if ($caixa.permissoes.hasObjeto(206)){ %>
+			<div id="exibePessoaId">
+				<div class="row-fluid">
+					<div class="span2 text-right pesquisa-label">
+						<label>ID da pessoa</label>
+					</div>
+					<div class="span10">
+						<input type="text" id="inpParamPessoaId" class="span12 number"/>
+					</div>
+				</div>
+			</div>
+		<% } %>
+		<div class="row-fluid">
+			<div class="span2 text-right pesquisa-label">
+				<label>Tipo Pessoa:</label>
+			</div>
+			<div class="span10">
+				<select class="span12" id="selTipoPessoa">
+					<option value="0">...</option>
+					<% tiposPessoas.each(function(model){ %>
+						<option value="<%= model.get('codigo') %>"><%= model.get('descricao') %></option>
+					<% });%>
+				</select>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span2 text-right pesquisa-label">
+				<label>Nome/CNPJ/CPF:</label>
+			</div>
+			<div class="span10">
+				<input type="text" id="inpParamPesq" class="span12"/>
+			</div>
+		</div>
+		<div class="row-fluid hide" id="exibeConsultaRural">
+			<div class="span2 text-right pesquisa-label">
+				<label>Matr&iacute;cula/CCIR:</label>
+			</div>
+			<div class="span10">
+				<input type="text" id="inpParamPesqRural" class="span12 number"/>
+			</div>
+		</div>
+		<hr/>
+		<% if (pessoasConsultadas.length > 0) { %>
+			<div id="divExibeResultadoPesquisa" style="max-height: 125px; overflow: auto;">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr class="table-default-header">
+							<th COLSPAN="2">Nome</th>
+							<% if (apresentaMatricula == 1) {%>
+								<th class="text-center">Matr&iacute;cula</th>
+							<% } %>
+							<th class="text-center">CPF/CNPJ/CCIR</th>
+						</tr>
+					</thead>
+					<tbody id="tablePesqAvancada">
+					</tbody>
+				</table>
+			</div>
+		<% } %>
+		<br/>
+		<div class="row-fluid" style="background-color: #f5f5f5; max-height: 125px; overflow: auto;">
+			<p>
+				<strong>
+					<span class="person-name">&Uacute;ltimos clientes acessados</span>
+				</strong>
+			</p>
+			<table class="table table-hover table-condensed">
+				<tbody id="tableUltimosConsultados">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="row-fluid">
+			<div class="span6">
+				<% if ($caixa.permissoes.hasObjeto(2) & $caixa.permissoes.hasTipoPessoa(23, 1)){ %>
+					<div class="pull-left">
+						<button class="btn btn-success hide" id="btnCadPropriedade">Cadastrar Propriedade</button>
+					</div>
+				<% } %>
+			</div>
+			<div class="span6">
+				<div class="pull-right">
+					<button class="btn btn-primary" id="btnPesqAvancOk">Ok</button>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,109 @@
+<%
+	function toRural(value){
+		value = value.substring(0,3) + '.' + value.substring(3,6) + '.' + value.substring(6,9) + '.' + value.substring(9,12) + '-' + value.substring(12,13);
+		return value; 
+	}
+%>
+<div id="pf" class="row-fluid">
+	<div class="panel panel-default">
+		<div class="panel-heading" style="height: 38px;">
+			<div class="">
+				<div class="btn show-person" id="btnExibeDetalhe" data-toggle="collapse" data-target="#dadosGerais" title="Exibir Dados Cadastrais">
+					<span class="add-on" id="exibeDetalhe">
+						<i class="icon-user"></i>
+						<i class="caret"></i>
+					</span>
+				</div>
+				<% if(procBatch == null || procBatch == 0){ %>
+					<strong class="text-info person-name" id="pessoaRural">
+						<% if (matricula > 0 ) { %> <%= toRural(codigoPropriedade) %> - <% } %>
+						<%= nome %>
+					</strong>
+				<% }else{ %>
+					<strong class="text-error person-name" id="pessoaRural">
+						<% if (matricula > 0 ) { %> <%= toRural(codigoPropriedade) %> - <% } %>
+						<%= nome %>
+					</strong>
+				<% } %>
+				
+				<% if ((procBatch != null && procBatch != 0 && $caixa.permissoes.hasObjeto(108)) || $caixa.permissoes.hasObjeto(204) || $caixa.permissoes.hasObjeto(205)) { %>
+				<div class="navbar" style="margin-top: -42px; margin-right: -15px;" title="Op&ccedil;&otilde;es">
+           			<ul class="nav pull-right">
+             				<li class="dropdown">
+               				<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="line-height: 9px;"><b class="icon-th-list"></b></a>
+               				<ul class="dropdown-menu">
+                 				<% if(procBatch != null && procBatch != 0 && $caixa.permissoes.hasObjeto(108)) { %>
+                    				<li class="pointer" id="prDesbloqPessoa">
+                      					<span><i class="icon-lock"></i> Desbloqueio</span>
+                    				</li>
+                  				<% } %>
+                  				
+                  				<% if ($caixa.permissoes.hasObjeto(204) || $caixa.permissoes.hasObjeto(205)) { %>
+	                  				<li class="pointer" id="prAlterarPessoa">
+	                        			<span><i class="icon-list-alt"></i> Alterar Propriedade Rural</span>
+	                      			</li>
+	                      		<% } %>
+	                      		<% if (matricula > 0 ) { %>
+	                      		    <% if(procBatch == null | procBatch == 0){ %>
+	                 					<li class="pointer" id="pesRuralMatrExibeRelatorioValidacao">
+	                   						<span><i class="icon-ok"></i> Valida&ccedil;&atilde;o</span>
+	                 					</li>
+										<li class="pointer" id="reparaDados">
+					                    	<span><i class="icon-wrench"></i> Repara Dados</span>
+										</li>
+	                 				<% } %>
+									<% if($caixa.permissoes.hasObjeto(196)){ %>
+										<li class="pointer" id="exibeInfCanc">
+					                    	<span><i class="icon-ban-circle"></i> Exibir Informa&ccedil;&otilde;es Canceladas</span>
+					                  	</li>
+									<% } %>
+								<% } %>
+			                </ul>
+             				</li>
+           			</ul>
+          		</div>
+          		<% } %>
+			</div>
+		</div>
+		<div id="dadosGerais" class="collapse">
+			<div class="panel-body">
+				<form class="form-inline dadosGerais">
+					<div class="row-fluid">
+						<div class="span6">
+							<p>
+								<label>Empreendimento:</label>
+								<span class="form-label-static"><%= nome  %></span>
+							</p>
+							<% if (matricula > 0 ) { %>
+								<p>
+									<label>Matr&iacute;cula:</label>
+									<span class="form-label-static"><%= matricula %></span>
+								</p>
+								<p>
+									<label>Cert. Cad. Im&oacute;vel Rural:</label>
+									<span class="form-label-static"><%= toRural(codigoPropriedade) %></span>
+								</p>
+							<% } else { %>
+								<p>
+									<label>Respons&aacute;vel:</label>
+									<span class="form-label-static">
+									<% if (responsavel.tipo.codigo == 1 ) { %>
+										<%= responsavel.pessoaCpf %>
+									<% } else { %> 
+										<%= responsavel.pessoaCnpj %>
+									<% } %> - <%= responsavel.nome %></span>
+								</p>
+								<p>
+									<label>Munic&iacute;pio:</label>
+									<span class="form-label-static"><%= municipio %></span>
+								</p>
+							<% } %>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="exibeValidacaoPessoaRural"></div>
+<div id="divDadosCancelados"></div>

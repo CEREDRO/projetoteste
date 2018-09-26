@@ -1,0 +1,254 @@
+<%
+
+    
+	function toDate(value){
+		if (value != null && value != ""){
+			var novo = "";
+			var len = 0;
+			novo += value; 
+			len = novo.length;
+			if(len < 8){
+				len = 8 - len;
+				for(var i = 0; i < len; i++){
+					novo = '0' + novo;
+				}
+			}
+			value = novo;
+		}
+		return value;
+	}
+	function toNumeric(value){
+		if (value != null && value != ""){
+			value = parseFloat(value.toFixed(2));
+			var t = "";
+			t += value;
+			var indice = t.indexOf(".");
+			
+			if (indice == -1){
+				t += ',00';
+			}else{
+				var len = t.length;
+				len = len - indice;
+				if (len < 3){
+					t += '0'; 
+				}
+				t.replace('.',',');
+			}
+			value = t;
+		}
+		return value;
+	}
+	function toPercente(value){
+		if (value != null && value != ""){
+			var t = "";
+			t += value;
+			var indice = t.indexOf(".");
+			var len = 0;
+			if (indice == -1){
+				t += ',00';
+			}else{
+				len = t.length;
+				len = len - indice;
+				if (len < 3){
+					t += '0'; 
+				}
+				t.replace('.',',');
+			}
+			value = t;
+		}
+		return value;
+	}
+%>
+<% if(model.get('listaItemDemonstrativo') != null){ %>
+<div id="itemQuadro" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 800px; left: 40%; display: block;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<div class="row-fluid">
+			<div class="span7">
+				<h4 id="myModalLabel"><%= model.get('descricao') %></h4>
+			</div>
+			<div class="span5">
+				<div class="pull-right">
+					<h5>Data de Refer&ecirc;ncia: <%= model.get('anoReferencia') %></h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-body" id="estruturaMontada">
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th width="2%"></th>
+					<th width="85%"></th>
+					<th width="13%"></th>
+				</tr>
+			</thead>
+			<tbody>
+			<% 
+			model.get('listaItemDemonstrativo').each(function(data){
+				var estrutura = data.get('estrutura');
+				var conta = estrutura.conta; %>
+				<tr>
+					<% if (conta.mensagem != null){ %>
+						<td>
+							<i class="icon-question-sign pointer" data-acao="A" data-mensagem="<%= conta.mensagem.trim() %>"></i>
+						</td>
+					<% }else{ %>	
+						<td></td>
+					<% } %>
+					<% if(estrutura.indicaPai == 1){ %>
+						<td><span style="color: blue;">&nbsp;&nbsp;&nbsp;&nbsp;<%= conta.denominacao.trim() %></span></td>
+					<% }else{ %>
+						<td><span><%= conta.denominacao.trim() %></span></td>
+					<% } %>
+					<% if(estrutura.indicaPai == 1){ %>
+						<% if (conta.unidade == 1){ %>
+							<td>
+								<% if(data.get('valor') > 0){ 
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge moeda input-item-quadro indica-sintese" type="text" value="<%=  toNumeric(data.get('valor')) %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>"  data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge moeda input-item-quadro" type="text" value="<%=  toNumeric(data.get('valor')) %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								}else{
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="0,00" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="0,00" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								} %>
+							</td>
+						<% }else if (conta.unidade == 2){ %>
+							<td>
+								<% if(data.get('valor') > 0){
+									if(estrutura.estruturaSintese != 0){ %>
+										<input onClick="this.select();" id="<%= estrutura.codigo %>" class="input-xlarge percent input-item-quadro indica-sintese" type="text" value="<%= toPercente(data.get('valor')) %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input onClick="this.select();" id="<%= estrutura.codigo %>" class="input-xlarge percent input-item-quadro" type="text" value="<%= toPercente(data.get('valor')) %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								}else{
+									if(estrutura.estruturaSintese != 0){ %>
+										<input onClick="this.select();" id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="00,00%" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input onClick="this.select();" id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="00,00%" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								} %>
+							</td>
+						<% }else if (conta.unidade == 3){ %>
+							<td>
+								<% if(data.get('valor') > 0){ 
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="<%= data.get('valor') %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="<%= data.get('valor') %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								}else{ 
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="0" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="0" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								} %>
+							</td>
+						<% }else if (conta.unidade == 4){ %>
+							<td>
+								<% if(data.get('valor') > 0){
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge data input-item-quadro indica-sintese" type="text" value="<%= toDate(data.get('valor')) %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge data input-item-quadro" type="text" value="<%= toDate(data.get('valor')) %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								}else{
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="00/00/0000" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="00/00/0000" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								} %>
+							</td>
+						<% }else if (conta.unidade == 5){ %>
+							<td>
+								<% if(data.get('valor') > 0){
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="<%= data.get('valor') %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input class="input-xlarge input-item-quadro" type="text" value="<%= data.get('valor') %>" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								}else{
+									if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="0" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="0" disabled="disabled" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }
+								} %>								
+							</td>
+						<% } %>
+					<% }else{ %>
+						<% if(conta.listaGradacaoOcorrencia != null){ %>
+							<td>
+								<select id ="<%= estrutura.codigo %>" style="height: 27px;margin-bottom: 0;width: 290px;font-size: 13px;">
+									<option value="0">...</option>
+									<% conta.listaGradacaoOcorrencia.each(function(ddw){ %>
+									 	<option value="<%= ddw.get('gradacao').codigo %>"><%= ddw.get('gradacao').denominacao %></option>
+									<% }); %>
+								</select>
+							</td>
+						<% }else{ %>
+							<% if (conta.unidade == 1){ %>
+								<td>
+									<% if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge moeda input-item-quadro indica-sintese" type="text" value="<%= toNumeric(data.get('valor')) %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge moeda input-item-quadro" type="text" value="<%= toNumeric(data.get('valor')) %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% } %>
+								</td>
+							<% }else if (conta.unidade == 2){ %>
+								<td>
+									<% if(estrutura.estruturaSintese != 0){ %>
+										<input onClick="this.select();" id="<%= estrutura.codigo %>" class="input-xlarge percent input-item-quadro indica-sintese" type="text" value="<%= toPercente(data.get('valor')) %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input onClick="this.select();" id="<%= estrutura.codigo %>" class="input-xlarge percent input-item-quadro" type="text" value="<%= toPercente(data.get('valor')) %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% } %>
+								</td>
+							<% }else if (conta.unidade == 3){ %>
+								<td>
+									<% if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="<%= data.get('valor') %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="<%= data.get('valor') %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% } %>
+								</td>
+							<% }else if (conta.unidade == 4){ %>
+								<td>
+									<% if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge data input-item-quadro indica-sintese" type="text" data-format="dd/MM/yyyy" value="<%= toDate(data.get('valor')) %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge data input-item-quadro" type="text" data-format="dd/MM/yyyy" value="<%= toDate(data.get('valor')) %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% } %>
+								</td>
+							<% }else if (conta.unidade == 5){ %>
+								<td>
+									<% if(estrutura.estruturaSintese != 0){ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro indica-sintese" type="text" value="<%= data.get('valor') %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sintese="<%= estrutura.estruturaSintese %>" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% }else{ %>
+										<input id="<%= estrutura.codigo %>" class="input-xlarge input-item-quadro" type="text" value="<%= data.get('valor') %>" id="<%= estrutura.codigo %>" data-itemqvtipo="I" style="margin-bottom: 0px;height: 18px;margin-bottom: 0px;text-align: right;font-size: 13px;padding-right: 12px;" data-sinal="<%= estrutura.estruturaSinal %>" data-valor=""/>
+									<% } %>
+								</td>
+							<% } %>
+						<% } %>
+						
+					<% } %>
+				<tr>
+			<% }); %>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<% if(model.get('permite') == 1){ %>
+			<button class="btn btn-primary" id="btnOkItemQv">Ok</button>
+		<% } %>
+		
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+	</div>
+</div>
+<% } %>

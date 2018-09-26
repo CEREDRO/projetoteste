@@ -1,0 +1,496 @@
+body{
+	height: 100%;
+}
+
+.wizard:before,
+.wizard:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.wizard:after {
+  clear: both;
+}
+
+/* Wizard Horizontal */
+.wizard-horizontal .wizard-steps {
+    display: block;
+    list-style: none outside none;
+    margin: 12px 0 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.wizard-horizontal .wizard-steps:after {
+    clear:both;
+}
+.wizard-horizontal .wizard-steps li {
+    display: block;
+    float: left;
+    max-width: 25%;
+    min-width: 25%;
+    text-align: center;
+}
+.wizard-horizontal .wizard-steps li:before {
+    border-top: 3px solid #E5E8ED;
+    content: "";
+    display: block;
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    z-index: 1;
+}
+.wizard-horizontal .wizard-steps li:first-child:before {
+    left: 50%;
+    max-width: 50%;
+}
+.wizard-horizontal .wizard-steps li:last-child:before {
+    max-width: 50%;
+    width: 50%;
+}
+.wizard-horizontal .wizard-steps li.active:before, 
+.wizard-horizontal .wizard-steps li.complete:before, 
+.wizard-horizontal .wizard-steps li.active .step, 
+.wizard-horizontal .wizard-steps li.complete .step {
+    background-color: #F2F7FB;
+    border-color: #CBDEEE;
+    box-shadow: 0 0 1px 2px #FFFFFF inset;
+    color: #34A0ED;
+    font-weight: bold;
+}
+.wizard-horizontal .wizard-steps li .step {
+    background-color: #FFFFFF;
+    border: 2px solid #E5E8ED;
+    border-radius: 32px 32px 32px 32px;
+    color: #D8DCE6;
+    display: inline;
+    font-size: 19px;
+    line-height: 12px;
+    padding: 7px 15px;
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+.wizard-horizontal .wizard-steps li.complete .title, 
+.wizard-horizontal .wizard-steps li.active .title {
+    color: #2B3D53;
+}
+.wizard-horizontal .wizard-steps li .title {
+    color: #B1BCC5;
+    display: block;
+    font-size: 13px;
+    line-height: 15px;
+    max-width: 100%;
+    position: relative;
+    table-layout: fixed;
+    text-align: center;
+    top: 15px;
+    word-wrap: break-word;
+    z-index: 104;
+}
+.step-content {
+	height: auto !important;
+}
+.step-content .step-pane {
+    display: none;
+    min-height: 267px;
+}
+.step-content .active {
+    display: block;
+}
+
+
+/* Wizard Vertical */
+.wizard-vertical .wizard-style{background-color:#efefef;}
+.wizard-vertical .wizard-style h5{margin-left:10px;}
+
+.wizard-vertical .wizard-steps {
+	/* position: fixed;
+	top:185px */
+	margin: 0;
+	
+}
+.wizard-vertical .wizard-steps li {
+	display: block;
+	padding: 5px 0;
+	height: 30px;
+}
+.wizard-vertical .wizard-steps li:before {
+    display: block;
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    z-index: 1;
+}
+.wizard-vertical .wizard-steps li:first-child:before {left: 50%;}
+
+.wizard-vertical .wizard-steps li:last-child:before {
+
+}
+
+
+.wizard-vertical .wizard-steps li.active {
+    background-color: #134b9d;
+	background-image: -moz-linear-gradient(top, #2973be, #134b9d);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2973be), to(#134b9d));
+	background-image: -webkit-linear-gradient(top, #2973be, #134b9d);
+	background-image: -o-linear-gradient(top, #2973be, #134b9d);
+	background-image: linear-gradient(to bottom, #2973be, #134b9d);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2973be', endColorstr='#ff134b9d', GradientType=0);
+    color: #ffffff;
+}
+.wizard-vertical .wizard-steps li.active:before, 
+.wizard-vertical .wizard-steps li.active .step {
+    background-color: #ffffff;
+    margin-top:3px;
+    color: #2b6ccc;
+    font-weight: bold;
+}
+
+.wizard-vertical .wizard-steps li.complete:before,
+.wizard-vertical .wizard-steps li.complete .step {
+    background: url('../img/stepComplete.png') no-repeat !important;
+	display: block;
+	width: 25px;
+	margin: 3px 0 0 10px;
+	font-size: 0;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 6px 8px 8px;
+}
+
+.wizard-vertical .wizard-steps li.andamento:before,
+.wizard-vertical .wizard-steps li.andamento .step {
+    background: url('../img/stepAndamento.png') no-repeat !important;
+	display: block;
+	width: 25px;
+	margin-left: 10px;
+	font-size: 0;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 6px 8px 8px;
+}
+
+.wizard-vertical .wizard-steps li.pendente:before,
+.wizard-vertical .wizard-steps li.pendente .step {
+    background: url('../img/stepPendente.png') no-repeat !important;
+	display: block;
+	width: 25px;
+	margin-left: 10px;
+	font-size: 0;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 6px 8px 8px;
+}
+
+.wizard-vertical .wizard-steps li .step {
+  	background-color: #f4f4f4;
+	background-image: -moz-linear-gradient(top, #ffffff, #efefef);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#efefef));
+	background-image: -webkit-linear-gradient(top, #ffffff, #efefef);
+	background-image: -o-linear-gradient(top, #ffffff, #efefef);
+	background-image: linear-gradient(to bottom, #ffffff, #efefef);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffefefef', GradientType=0);
+	border: 1px solid #ccc;
+	border-radius: 32px 32px 32px 32px;
+	color: #999999;
+	display: inline;
+	font-size: 14px;
+	line-height: 12px;
+	padding: 7px 15px;
+	position: relative;
+	text-align: center;
+	z-index: 2;
+	/* box-shadow: 0 0 1px 2px #FFFFFF inset; */
+	font-weight: bold;
+}
+
+.wizard-vertical .wizard-steps li.active .title {color: #ffffff !important;}
+
+.wizard-vertical .wizard-steps li.complete .title {color: #333333;}
+
+.wizard-vertical .wizard-steps li .title {
+    color: #666666;
+    display: block;
+    font-size: 14px;
+    line-height: 15px;
+    max-width: 100%;
+    position: relative;
+    table-layout: fixed;
+    padding-left:50px;
+    top: 6px;
+    word-wrap: break-word;
+    z-index: 104;
+}
+
+.foco {
+	font-weight: bold;
+	font-size: 17px !important;
+	background-color: #2b6ccc;
+}
+
+.wizard-vertical .wizard-steps li.foco .step {
+    background-color: #F2F7FB;
+    border-color: #CBDEEE;
+    color: #34A0ED;
+}
+  
+.wizard-vertical ul.wizard-steps li.foco .title {
+    color: #FFF;
+}
+
+.wizard-progress-container {padding: 20px 10px 5px;}
+
+.progress-striped .bar {background-color: #2b6ccc;}
+
+.wizard-panel{
+	background-color: #f4f4f4;
+	margin: 0;
+}
+
+.wizard-vertical .wizard-steps li .step {
+	padding: 6px 8px;
+	margin-left: 8px;
+	float: left;
+}
+
+
+/* body{
+	height: 100%;
+}
+
+.wizard:before,
+.wizard:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.wizard:after {
+  clear: both;
+}
+
+Wizard Horizontal
+.wizard-horizontal .wizard-steps {
+    display: block;
+    list-style: none outside none;
+    margin: 12px 0 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.wizard-horizontal .wizard-steps:after {
+    clear:both;
+}
+.wizard-horizontal .wizard-steps li {
+    display: block;
+    float: left;
+    max-width: 25%;
+    min-width: 25%;
+    text-align: center;
+}
+.wizard-horizontal .wizard-steps li:before {
+    border-top: 3px solid #E5E8ED;
+    content: "";
+    display: block;
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    z-index: 1;
+}
+.wizard-horizontal .wizard-steps li:first-child:before {
+    left: 50%;
+    max-width: 50%;
+}
+.wizard-horizontal .wizard-steps li:last-child:before {
+    max-width: 50%;
+    width: 50%;
+}
+.wizard-horizontal .wizard-steps li.active:before, 
+.wizard-horizontal .wizard-steps li.complete:before, 
+.wizard-horizontal .wizard-steps li.active .step, 
+.wizard-horizontal .wizard-steps li.complete .step {
+    background-color: #F2F7FB;
+    border-color: #CBDEEE;
+    box-shadow: 0 0 1px 2px #FFFFFF inset;
+    color: #34A0ED;
+    font-weight: bold;
+}
+.wizard-horizontal .wizard-steps li .step {
+    background-color: #FFFFFF;
+    border: 2px solid #E5E8ED;
+    border-radius: 32px 32px 32px 32px;
+    color: #D8DCE6;
+    display: inline;
+    font-size: 19px;
+    line-height: 12px;
+    padding: 7px 15px;
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+.wizard-horizontal .wizard-steps li.complete .title, 
+.wizard-horizontal .wizard-steps li.active .title {
+    color: #2B3D53;
+}
+.wizard-horizontal .wizard-steps li .title {
+    color: #B1BCC5;
+    display: block;
+    font-size: 13px;
+    line-height: 15px;
+    max-width: 100%;
+    position: relative;
+    table-layout: fixed;
+    text-align: center;
+    top: 15px;
+    word-wrap: break-word;
+    z-index: 104;
+}
+.step-content {
+	height: auto !important;
+}
+.step-content .step-pane {
+    display: none;
+    min-height: 267px;
+}
+.step-content .active {
+    display: block;
+}
+
+
+Wizard Vertical
+.wizard-vertical .wizard-steps {
+	position: fixed;
+	top:185px
+	margin: 0;
+}
+.wizard-vertical .wizard-steps li {
+	display: block;
+	padding-top: 5px;
+	height: 30px;
+}
+.wizard-vertical .wizard-steps li:before {
+    display: block;
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    z-index: 1;
+}
+.wizard-vertical .wizard-steps li:first-child:before {
+    left: 50%;
+}
+.wizard-vertical .wizard-steps li:last-child:before {
+
+}
+
+.wizard-vertical .wizard-steps li.active:before, 
+.wizard-vertical .wizard-steps li.active .step {
+    background-color: #F2F7FB;
+    border-color: #CBDEEE;
+    box-shadow: 0 0 1px 2px #FFFFFF inset;
+    color: #34A0ED;
+    font-weight: bold;
+}
+
+.wizard-vertical .wizard-steps li.complete:before,
+.wizard-vertical .wizard-steps li.complete .step {
+    background: url('../img/ico_status_ok.gif') no-repeat !important;
+	display: block;
+	width: 25px;
+	margin-left: 10px;
+	font-size: 0;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+.wizard-vertical .wizard-steps li .step {
+  	background-color: #F0F2F3;
+	border: 2px solid #CBDEEE;
+	border-radius: 32px 32px 32px 32px;
+	color: #B4B4B4;
+	display: inline;
+	font-size: 14px;
+	line-height: 12px;
+	padding: 7px 15px;
+	position: relative;
+	text-align: center;
+	z-index: 2;
+	box-shadow: 0 0 1px 2px #FFFFFF inset;
+	font-weight: bold;
+}
+
+.wizard-vertical .wizard-steps li.active .title,
+.wizard-vertical .wizard-steps li.complete .title {
+    color: #666;
+}
+
+.wizard-vertical .wizard-steps li .title {
+    color: #B1BCC5;
+    display: block;
+    font-size: 13px;
+    line-height: 15px;
+    max-width: 100%;
+    position: relative;
+    table-layout: fixed;
+    padding-left:55px;
+    top: 6px;
+    word-wrap: break-word;
+    z-index: 104;
+}
+
+.foco {
+	font-weight: bold;
+	font-size: 17px !important;
+	background-color: #2b6ccc;
+}
+
+.wizard-vertical .wizard-steps li.foco .step {
+    background-color: #F2F7FB;
+    border-color: #CBDEEE;
+    color: #34A0ED;
+}
+  
+.wizard-vertical ul.wizard-steps li.foco .title {
+    color: #FFF;
+}
+
+.wizard-progress-container {
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-top: 8px;
+}
+
+.progress-striped .bar {
+	background-color: #2b6ccc;
+}
+
+.wizard-panel{
+	background-color: #f4f4f4;
+	margin: 0;
+}
+
+.wizard-vertical .wizard-steps li .step {
+	padding: 6px 8px;
+	margin-left: 8px;
+	float: left;
+}
+ */

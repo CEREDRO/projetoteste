@@ -1,0 +1,31 @@
+<div id="erroCoccir" class="alert alert-danger hide">
+O campo Certificado de Cadastro de Im&oacute;vel Rural deve possuir, obrigatoriamente, 13 algarismos.
+</div>
+<% if ((acao == 'CADASTRAR') | ($caixa.permissoes.hasObjeto(204) | $caixa.permissoes.hasObjeto(205))) { %>
+<div class="row-fluid">
+	<div class="span3 text-right pesquisa-label">
+		<label>Nome da Propriedade Rural:</label>
+	</div>
+	<div class="span9">
+		<input type="text" id="noPropriedade" class="span12" value="<%= model.get('nome') %>"/>
+	</div>
+</div>
+<% } %>
+<% if (acao == 'CADASTRAR' | $caixa.permissoes.hasObjeto(205)) { %>
+<div class="row-fluid">
+	<div class="span3 text-right pesquisa-label">
+		<label>Matr&iacute;cula:</label>
+	</div>
+	<div class="span4">
+		<input type="text" pattern="\d*" id="coMatricula" class="span12" value="<%= model.get('matricula') %>"/>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span3 text-right pesquisa-label">
+		<label>Cert. Cad. Im&oacute;vel Rural:</label>
+	</div>
+	<div class="span4">
+		<input type="text" pattern="\d*|\.|\-" id="coccir" class="span12" value="<%= model.get('ccir') %>"/>
+	</div>
+</div>
+<% } %>

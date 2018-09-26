@@ -1,0 +1,76 @@
+<div id="relacionamento" class="modal_big hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<% if(model.get('tipoRelacionamento') != null){ %>
+			<h3 id="myModalLabel"><%= model.get('tipoRelacionamento').descricao %></h3>
+		<% } %>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="input-append span12">
+				<input class="span6" id="pesqnuCpfCnpj" type="text" placeholder="Digite o CPF, CNPJ, Nome ou CCIR">
+				<button class="btn" id="btnLocPessoaRel"><i class="icon-search"></i></button>
+			</div>
+			<table class="table table-hover margin0">
+				<thead>
+					<tr class="table-default-header">
+						<th class="text-center">Nome/Raz&atilde;o Social</th>
+						<% if (pessoa != null){ %>
+							<% if (pessoa.filter(function (p) { return p.get("tipo").codigo === 23}).length > 0) {%>
+								<th class="text-center">Matr&iacute;cula</th>
+								<th class="text-center">CCIR</th>
+							<% } %>
+						<% } %>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (pessoa != null){
+						pessoa.each(function(models){ %>
+						<tr id="<%= models.get('codigo') %>">
+							<td><%= models.get('nome') %></td>
+							
+							<% if (models.get("tipo").codigo == 23) { %>
+								<td><% if (models.get('matricula') > 0) { %> <%= models.get('matricula') %> <% } %></td>
+								<td><% if (models.get('matricula') > 0) { %> <%= $caixa.util.formataCCIR(models.get('codigoPropriedade')) %> <% } %></td>
+							<% } %>
+						</tr>
+					<% });} %>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	<div class="modal-footer">
+		<div class="row-fluid" >
+			<div class="span7">
+				<div class="row-fluid">
+					<% if(parseInt(parm.inicio) != 1){ %>
+						<label class="span4 text-left" id="labelInicio">Data Inicio</label>
+					<% } %>
+					<% if(parseInt(parm.fim) != 1){ %>
+						<label class="span4 text-left" id="labelFim">Dt Termino</label>
+					<% } %>
+					<% if(parseInt(parm.valor) != 1){ %>
+						<label class="span4 text-left" id="labelValor">Valor</label>
+					<% } %>
+				</div>
+				<div class="row-fluid">
+					<% if(parseInt(parm.inicio) != 1){ %>
+						<input type="text" class="span4 data text-left" style="float: left;" data-format="dd/MM/yyyy" id="inpDtInicio" value="<%= model.get('validadeDataInicio') %>">
+					<% } %>
+					<% if(parseInt(parm.fim) != 1){ %>
+						<input type="text" class="span4 data text-left" style="float: left;" data-format="dd/MM/yyyy" id="inpDtFim" value="<%= model.get('validadeDataTermino') %>">
+					<% } %>
+					<% if(parseInt(parm.valor) != 1){ %>
+						<input type="text" class="span4 moeda text-left" style="float: left;" id="inpValor" value="<%= model.get('valor') %>">
+					<% } %>
+				</div>
+			</div>
+			<div class="span5">
+				<br/>
+				<button class="btn btn-primary" id="btnOkRel">Ok</button>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
