@@ -1,6 +1,0 @@
-<select class="span12" id="uf">
-	<option value=''></option>
-  <% colecao.each(function(estado) { %>
-  	<option value='<%= estado.get("codigo") %>' id='estado-<%= estado.get("codigo") %>'><%= estado.get("sigla") %></option>
-  <% }); %>
-</select>

@@ -1,9 +1,0 @@
-<% $.each(cabecalhos, function(i, cabecalho){ %>
-	<td id="grupo-formulario" class="<%= campos.filtro({campo: 'cabecalho', valor: cabecalho.codigo}).get('classe') %>">
-		<% if (campos.filtro({campo: 'cabecalho', valor: cabecalho.codigo}).get('tipoMetadado') == 1) { %>
-			<%= campos.filtro({campo: 'cabecalho', valor: cabecalho.codigo}).get('valor') %>
-		<% } else { %>
-			<%= campos.filtro({campo: 'cabecalho', valor: cabecalho.codigo}).get('descricao') %>
-		<% } %>
-	</td>
-<% }); %>

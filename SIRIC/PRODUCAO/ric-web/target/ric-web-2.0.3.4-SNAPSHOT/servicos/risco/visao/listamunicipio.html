@@ -1,6 +1,0 @@
-<select class="span12" id="municipio">
-	<option value=''></option>
-  <% colecao.each(function(municipio) { %>
-  	<option value='<%= municipio.get("codigo") %>' id='municipio-<%= municipio.get("codigo") %>'><%= municipio.get("nome") %></option>
-  <% }); %>
-</select>
